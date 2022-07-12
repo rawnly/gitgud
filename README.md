@@ -1,12 +1,21 @@
-# gitgud
-Git library with DX in mind
+# Gitgud
+A tiny library to run git commands.
 
-## Installation
+Sometimes working with `exec.Cmd` might not be easy as expected. Here gitgud comes to help you.
+Every command has a standard `Runnable` output. It is similar to the `exec.Cmd` interface but with some tweaking.
+If you need more customisation you can always use the original `exec.Cmd` instance and tweak it yourself.
+
+## Features
+- Ease of use
+- Handle command errors
+- Supports custom `stderr`, `stdout` and `stdin`
+- Run directly in the terminal with `RunInTerminal`
+
+
+## Usage
 ```shell
 go get -u github.com/rawnly/gitgud
 ```
-
-## Usage
 ```go
 package main
 
@@ -27,6 +36,28 @@ func main() {
 	
 	fmt.Println(status)
 } 
+```
+
+Advanced Example
+```go
+package main 
+
+import "github.com/rawnly/gitgud/git"
+import "os"
+
+func main() {
+	diffCmd := git.Commit("docs(readme): updated example", nil)
+	
+	stdout := &bytes.Buffer{}
+	stderr := &bytes.Buffer{}
+	
+	diffCmd.Cmd.Stdout = stdout
+	diffCmd.Cmd.Stderr = stderr
+	
+	if err := diffCmd.Run(); err != nil {
+		panic(err)
+	}
+}
 ```
 
 ## Available Commands
