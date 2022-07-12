@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/rawnly/gitgud"
+	"github.com/rawnly/gitgud/git"
 	"log"
 )
 
 func main() {
-	status, err := gitgud.Status(gitgud.StatusOptions{
-		Verbose: true,
+	status, err := git.Status(&git.StatusOptions{
+		Short: true,
 	})
 
 	if err != nil {
