@@ -16,6 +16,7 @@ import (
 )
 
 func main() {
+	// equivalent to "git status -s" 
 	status, err := git.Status(&git.StatusOptions{
 		Short: true,
 	})
