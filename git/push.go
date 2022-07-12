@@ -14,7 +14,7 @@ type PushOptions struct {
 }
 
 // Push `git push origin ${branch}`
-func Push(branch string, options *PushOptions) (string, error) {
+func Push(branch string, options *PushOptions) run.Runnable {
 	opts := util.GetOptions(&options)
 	args := []string{
 		"origin", branch,

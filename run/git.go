@@ -2,7 +2,7 @@ package run
 
 import "os/exec"
 
-func Git(command string, args ...string) (string, error) {
+func Git(command string, args ...string) Runnable {
 	arguments := []string{command}
 
 	for _, v := range args {
@@ -10,9 +10,6 @@ func Git(command string, args ...string) (string, error) {
 	}
 
 	cmd := exec.Command("git", arguments...)
-	c := PrepareCmd(cmd)
 
-	out, err := c.Output()
-
-	return string(out), err
+	return PrepareCmd(cmd)
 }

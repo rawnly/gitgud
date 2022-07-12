@@ -3,6 +3,7 @@ package run
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -11,7 +12,12 @@ import (
 //Inspired by github.com/cli/cli/internal/run
 
 type Runnable interface {
+	// Output Returns output and error
 	Output() ([]byte, error)
+	// Run Ignores the output
+	Run() error
+	// RunInTerminal uses `os.stdin`, `os.stdout`, `os.stderr` as input/output.
+	RunInTerminal() error
 }
 
 var PrepareCmd = func(cmd *exec.Cmd) Runnable {
@@ -53,4 +59,29 @@ func (c CmdWithStderr) Output() ([]byte, error) {
 	}
 
 	return out, err
+}
+
+func (c CmdWithStderr) Run() error {
+	if c.Cmd.Stderr != nil {
+		return c.Cmd.Run()
+	}
+
+	errStream := &bytes.Buffer{}
+	c.Cmd.Stderr = errStream
+
+	err := c.Cmd.Run()
+
+	if err != nil {
+		err = &CmdError{errStream, c.Cmd.Args, err}
+	}
+
+	return err
+}
+
+func (c CmdWithStderr) RunInTerminal() error {
+	c.Cmd.Stdout = os.Stdout
+	c.Cmd.Stderr = os.Stderr
+	c.Cmd.Stdin = os.Stdin
+
+	return c.Cmd.Run()
 }

@@ -19,7 +19,7 @@ func main() {
 	// equivalent to "git status -s" 
 	status, err := git.Status(&git.StatusOptions{
 		Short: true,
-	})
+	}).Output()
 
 	if err != nil {
 		panic(err.Error())
@@ -41,7 +41,7 @@ func main() {
 - [ ] Rm
 
 #### Examine the history and state
-- [ ] Bisect
+- [x] Bisect
 - [ ] Diff
 - [ ] Grep
 - [ ] Log

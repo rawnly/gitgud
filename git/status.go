@@ -3,7 +3,6 @@ package git
 import (
 	"github.com/rawnly/gitgud/run"
 	"github.com/rawnly/gitgud/util"
-	"strings"
 )
 
 type StatusOptions struct {
@@ -15,35 +14,11 @@ type StatusOptions struct {
 }
 
 // Status `git status -s`
-func Status(options *StatusOptions) (string, error) {
-	colorUiConfig, err := Config("color.ui")
-
-	if err != nil {
-		if _, err := SetConfig("color.ui", "auto"); err != nil {
-			return "", err
-		}
-
-		return "", err
-	}
-
-	if _, err := SetConfig("color.ui", "always"); err != nil {
-		return "", err
-	}
-
+func Status(options *StatusOptions) run.Runnable {
 	var args []string
 	if options != nil {
 		args = util.StringifyOptions(util.GetOptions(*options))
 	}
 
-	b, err := run.Git("status", args...)
-
-	if err != nil {
-		return "", err
-	}
-
-	if _, err := SetConfig("color.ui", strings.TrimSpace(strings.Trim(colorUiConfig, "\n"))); err != nil {
-		return "", err
-	}
-
-	return b, nil
+	return run.Git("status", args...)
 }

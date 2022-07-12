@@ -2,37 +2,37 @@ package bisect
 
 import "github.com/rawnly/gitgud/run"
 
-func Start() (string, error) {
+func Start() run.Runnable {
 	return run.Git("bisect", "start")
 }
 
-func Good(commit string) (string, error) {
+func Good(commit string) run.Runnable {
 	return run.Git("bisect", "good", commit)
 }
 
-func Bad(commit string) (string, error) {
+func Bad(commit string) run.Runnable {
 	return run.Git("bisect", "bad", commit)
 }
 
-func Reset(commit string) (string, error) {
+func Reset(commit string) run.Runnable {
 	return run.Git("bisect", "reset", commit)
 }
 
-func Run(command string) (string, error) {
+func Run(command string) run.Runnable {
 	return run.Git("bisect", "run", "command")
 }
 
-func Skip(commit string) (string, error) {
+func Skip(commit string) run.Runnable {
 	return run.Git("bisect", "skip", commit)
 }
 
 type Runner struct {
-	Start func() (string, error)
-	Bad   func(commit string) (string, error)
-	Good  func(commit string) (string, error)
-	Skip  func(commit string) (string, error)
-	Reset func(commit string) (string, error)
-	Run   func(command string) (string, error)
+	Start func() run.Runnable
+	Bad   func(commit string) run.Runnable
+	Good  func(commit string) run.Runnable
+	Skip  func(commit string) run.Runnable
+	Reset func(commit string) run.Runnable
+	Run   func(command string) run.Runnable
 }
 
 var R = Runner{
