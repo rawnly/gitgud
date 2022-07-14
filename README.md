@@ -62,7 +62,7 @@ func main() {
 
 ## Available Commands
 #### Start a working area
-- [ ] Clone 
+- [x] Clone 
 - [ ] Init
 
 #### Work on the current change
