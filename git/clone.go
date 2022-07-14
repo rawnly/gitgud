@@ -23,11 +23,7 @@ type CloneOptions struct {
 // Clone `git clone`
 func Clone(repository string, options *CloneOptions) run.Runnable {
 	opts := util.GetOptions(&options)
-	var args []string
-
-	for _, v := range util.StringifyOptions(opts) {
-		args = append(args, v)
-	}
+	args := util.StringifyOptions(opts)
 
 	args = append(args, repository)
 
