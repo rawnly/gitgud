@@ -1,9 +1,11 @@
 package main
 
-import "github.com/rawnly/gitgud/git"
+import (
+	"github.com/rawnly/gitgud/run"
+)
 
 func main() {
-	commit := git.NewGitBuilder("clone").
+	commit := run.NewGitBuilder("clone").
 		Arg("--local").
 		Arg("git@github.com:rawnly/gitgud").
 		BoolFlag("--recursive", true).
