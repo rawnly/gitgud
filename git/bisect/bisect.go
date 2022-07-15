@@ -34,12 +34,3 @@ type Runner struct {
 	Reset func(commit string) run.Runnable
 	Run   func(command string) run.Runnable
 }
-
-var R = Runner{
-	Start: Start,
-	Run:   Run,
-	Bad:   Bad,
-	Good:  Good,
-	Reset: Reset,
-	Skip:  Skip,
-}

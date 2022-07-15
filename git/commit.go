@@ -11,8 +11,8 @@ type CommitOptions struct {
 }
 
 // Commit `git commit -n -a -m [message]`
-func Commit(options CommitOptions) run.Runnable {
-	opts := util.GetOptions(options)
+func Commit(options *CommitOptions) run.Runnable {
+	opts := util.GetOptions(&options)
 	args := util.StringifyOptions(opts)
 
 	return run.Git("commit", args...)
