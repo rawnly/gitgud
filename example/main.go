@@ -1,19 +1,16 @@
 package main
 
-import (
-	"fmt"
-	"github.com/rawnly/gitgud/git"
-)
+import "github.com/rawnly/gitgud/git"
 
 func main() {
-	out, err := git.Bisect.Start()
-	//out, err := git.Status(&git.StatusOptions{
-	//	Short: true,
-	//})
+	commit := git.NewGitBuilder("clone").
+		Arg("--local").
+		Arg("git@github.com:rawnly/gitgud").
+		BoolFlag("--recursive", true).
+		Arg("local-folder").
+		Build()
 
-	if err != nil {
-		fmt.Println(err.Error())
+	if err := commit.Run(); err != nil {
+		panic(err.Error())
 	}
-
-	fmt.Println(out)
 }
