@@ -8,7 +8,7 @@ func main() {
 	commit := run.NewGitBuilder("clone").
 		Arg("--local").
 		Arg("git@github.com:rawnly/gitgud").
-		BoolFlag("--recursive", true).
+		BoolFlag("--recursive").
 		Arg("local-folder").
 		Build()
 
