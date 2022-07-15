@@ -1,9 +1,5 @@
 package run
 
-import (
-	"fmt"
-)
-
 type GitCommand struct {
 	name      string
 	arguments []string
@@ -21,9 +17,8 @@ type GitCommandBuilder struct {
 	command *GitCommand
 }
 
-func (b *GitCommandBuilder) BoolFlag(flag string, value bool) *GitCommandBuilder {
+func (b *GitCommandBuilder) BoolFlag(flag string) *GitCommandBuilder {
 	b.command.arguments = append(b.command.arguments, flag)
-	b.command.arguments = append(b.command.arguments, fmt.Sprint(value))
 
 	return b
 }
