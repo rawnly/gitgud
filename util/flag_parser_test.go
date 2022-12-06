@@ -3,15 +3,17 @@ package util
 import "testing"
 
 type model struct {
-	S       string `flag:"s"`
-	More    bool   `flag:"more"`
-	Ignored bool
+	S        string `flag:"s"`
+	More     bool   `flag:"more"`
+	Ignored  bool
+	Argument string `arg:"the value is blue"`
 }
 
 var m model = model{
-	S:       "A",
-	More:    true,
-	Ignored: true,
+	S:        "A",
+	More:     true,
+	Ignored:  true,
+	Argument: "blue",
 }
 
 func TestGetOptions(t *testing.T) {
@@ -30,13 +32,35 @@ func TestGetOptions(t *testing.T) {
 	}
 }
 
+func TestGetArguments(t *testing.T) {
+	arguments := GetArguments(m)
+	expected := []string{"blue"}
+
+	t.Log(arguments, expected)
+
+	eq := false
+
+	if len(arguments) != 1 {
+		t.Fail()
+	}
+
+	for i := range arguments {
+		eq = arguments[i] == expected[i]
+	}
+
+	if !eq {
+		t.Fail()
+	}
+}
+
 func TestStringifyOptions(t *testing.T) {
 	options := GetOptions(m)
 	args := StringifyOptions(options)
 	expected := []string{"-s", m.S, "--more"}
 
 	if len(args) != len(expected) {
-		t.Fail()
+		t.Logf("data: %v", args)
+		t.Fatalf("Invalid length received, expected %d received %d", len(expected), len(args))
 	}
 
 	eq := false

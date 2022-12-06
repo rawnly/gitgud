@@ -7,6 +7,33 @@ import (
 
 type Options = map[string]interface{}
 
+func GetArguments[T any](model T) []string {
+	var values []string
+
+	t := reflect.TypeOf(model)
+	v := reflect.ValueOf(model)
+
+	// Iterating over struct fields (aka keys)
+	for i := 0; i < t.NumField(); i++ {
+		value := v.Field(i)
+		field := t.Field(i)
+		tag := field.Tag
+
+		// Skip if there are no tags.
+		if len(tag) == 0 {
+			continue
+		}
+
+		argument := tag.Get("arg")
+
+		if argument != "" {
+			values = append(values, value.String())
+		}
+	}
+
+	return values
+}
+
 func GetOptions[T any](model T) Options {
 	t := reflect.TypeOf(model)
 	v := reflect.ValueOf(model)
@@ -25,6 +52,10 @@ func GetOptions[T any](model T) Options {
 		}
 
 		flag := tag.Get("flag")
+
+		if flag == "" {
+			continue
+		}
 
 		if _, ok := m[flag]; !ok {
 			m[flag] = value
