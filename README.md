@@ -66,7 +66,7 @@ func main() {
 - [ ] Init
 
 #### Work on the current change
-- [ ] Add
+- [x] Add _(partially done)_
 - [ ] Mv
 - [ ] Restore
 - [ ] Rm
