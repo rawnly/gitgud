@@ -11,17 +11,22 @@ type StatusOptions struct {
 	ShowStash bool   `flag:"show-stash"`
 	Long      bool   `flag:"long"`
 	Verbose   bool   `flag:"v"`
-	Path      string `arg:""`
+	Path      string
 }
 
-// Status `git status -s`
+// Status `git status -s .`
 func Status(options *StatusOptions) run.Runnable {
 	var args []string
 	if options != nil {
 		args = util.StringifyOptions(util.GetOptions(*options))
 	}
 
-	args = append(args, util.GetArguments(options)...)
+	pathspec := "."
+	if options.Path != "" {
+		pathspec = options.Path
+	}
+
+	args = append(args, pathspec)
 
 	return run.Git("status", args...)
 }
