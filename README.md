@@ -60,6 +60,29 @@ func main() {
 }
 ```
 
+## Missing Something?
+If you're missing some commands you can always use `run.Git` to manually run git commands.
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/rawnly/gitgud/run"
+)
+
+func main() {
+	// equivalent to "git status -s" 
+	status, err := run.Git("status", "-s").Output()
+
+	if err != nil {
+		panic(err.Error())
+	}
+	
+	fmt.Println(status)
+}
+```
+
 ## Available Commands
 #### Start a working area
 - [x] Clone 
