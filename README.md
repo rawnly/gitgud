@@ -80,7 +80,8 @@ func main() {
 - [x] Status
 
 #### Grow, mark and tweak your common history
-- [ ] Branch
+- [x] Branch
+- [x] Checkout
 - [x] Commit
 - [ ] Merge
 - [ ] Rebase
